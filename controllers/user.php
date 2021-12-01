@@ -20,7 +20,7 @@ class User extends Controller
         $password = $_POST['password'];
         //? se mandan al modelo (userModel)
         if ($this->model->login($email, $password)) {
-            header("Location:" . BASE_URL . "dashboard");
+            header("Location:" . BASE_URL . "dashboard/");
         } else {
             header("Location:" . BASE_URL);
             exit();

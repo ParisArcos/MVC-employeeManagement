@@ -1,7 +1,6 @@
 <?php
-
+require_once "views/head.php";
 require_once "views/header.php";
-
 ?>
 <main class="container-xl mx-auto pb-90">
     <form action="<?php echo constant('BASE_URL'); ?>employee/addEmployee" method="POST" class="container-md">
@@ -64,3 +63,7 @@ require_once "views/header.php";
         <button type="submit" class="btn btn-primary">Submit New Employee</button>
     </form>
 </main>
+
+<?php
+require_once "views/footer.php";
+?>

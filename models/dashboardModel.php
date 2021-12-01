@@ -39,12 +39,14 @@ class dashboardModel extends Model
                 $item['phoneNumber'] = $row['phoneNumber'];
                 array_push($items, $item);
             }
+
             return $items;
         } catch (PDOException $e) {
             echo $e->getMessage();
             return [];
         }
     }
+
     //? trae los datos del usuario pedido por dashboard/showUser
     public function getById($userId)
     {
@@ -74,6 +76,36 @@ class dashboardModel extends Model
         }
     }
 
+
+    public function update($item)
+    {
+        //? preparamos la query
+        //todo no esta hecho con el metodo "normal" de prepare-execute, id = :id 
+        //todo porque me daba Error: SQLSTATE[HY093]: Invalid parameter number
+        $query = $this->db->connect()->prepare(
+            "UPDATE employees SET 
+            name='$item[name]', 
+            email='$item[email]', 
+            city='$item[city]', 
+            state='$item[state]', 
+            postalCode='$item[postalCode]', 
+            lastName='$item[lastName]', 
+            gender='$item[gender]', 
+            streetAddress='$item[streetAddress]', 
+            age='$item[age]', 
+            phoneNumber='$item[phoneNumber]'
+            WHERE id=$item[id]"
+        );
+        try {
+            //? actualizamos
+            $query->execute();
+            return true;
+        } catch (PDOException $e) {
+            //? si falla mostramos mensaje de error de la BDD
+            echo $e->getMessage();
+            return false;
+        }
+    }
 
     public function delete($id)
     {
