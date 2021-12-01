@@ -31,7 +31,7 @@ class Employee extends Controller
         ];
         //? se mandan al modelo (employeeModel)
         if ($this->model->insert($data)) {
-            header("Location:" . BASE_URL . "dashboard");
+            header("Location:" . BASE_URL . "dashboard/");
         };
         //?refrescamos la vista
         $this->render();
@@ -58,7 +58,7 @@ class Employee extends Controller
         //?intentamos hacer el update a la BDD
         if ($this->model->update($data)) {
             //? si sale bien, creamos un nuevo usuario actualizado para mostrar en el form 
-            header("Location:" . BASE_URL . "dashboard");
+            header("Location:" . BASE_URL . "dashboard/");
         } else {
             //? si no, mostramos un error 
             echo "<br>";

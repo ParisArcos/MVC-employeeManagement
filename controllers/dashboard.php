@@ -16,6 +16,12 @@ class Dashboard extends Controller
         $this->view->render("dashboard/index");
     }
 
+    public function getEmployees()
+    {
+        $employees =  $this->model->get();
+        echo json_encode($employees);
+    }
+
     //?este método muestra a un usuario que le pasamos por GET
     //?en app.php recogemos el get y llamamos al meotdo que corresponde con el pase de parametros
     public function showEmployee($param = null)
@@ -29,13 +35,44 @@ class Dashboard extends Controller
         $this->view->render('dashboard/editEmployee');
     }
 
+    //?este metodo recoge los datos de la vista y se los pase al modelo "update($data)" para actualizar
+    public function updateEmployee()
+    {
+        //?recogemos los datos
+        $data = [
+            'id' => $_POST['id'],
+            'name' => $_POST['name'],
+            'email' => $_POST['email'],
+            'city' => $_POST['city'],
+            'state' => $_POST['state'],
+            'postalCode' => $_POST['postalCode'],
+            'lastName' => $_POST['lastName'],
+            'gender' => $_POST['gender'],
+            'streetAddress' => $_POST['streetAddress'],
+            'age' => $_POST['age'],
+            'phoneNumber' => $_POST['phoneNumber'],
+        ];
 
+        //?intentamos hacer el update a la BDD
+        if ($this->model->update($data)) {
+            //? si sale bien, creamos un nuevo usuario actualizado para mostrar en el form 
+            header("Location:" . BASE_URL . "dashboard/");
+        } else {
+            //? si no, mostramos un error 
+            echo "<br>";
+            echo "Error en la actualisacion";
+            echo "<br>";
+        }
+        //? refrescamos la vista
+        $this->view->render('dashboard/editUser');
+    }
 
     //? a esta funcion se le pasan los parametros por AJAX desde dashboard.js
     public function deleteEmployee($param = null)
     {
-        $id = $param;
-        echo $id;
+
+        $id = $_POST['id'];
+
         //?intentamos hacer el delete a la BDD
         if ($this->model->delete($id)) {
             $text = "Exito en la eliminacion";

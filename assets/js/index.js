@@ -14,7 +14,6 @@ $("#jsGrid").jsGrid({
   deleteConfirm: "Do you really want to delete the employee?",
 
   onItemDeleted: () => {
-
     Toastify({
       text: "The item has been succesfully deleted!",
       position: "center",
@@ -22,7 +21,7 @@ $("#jsGrid").jsGrid({
       close: true,
       style: {
         background: "linear-gradient(to right, #CB356B, #BD3F32)",
-        color: "white"
+        color: "white",
       },
 
       offset: {
@@ -33,7 +32,6 @@ $("#jsGrid").jsGrid({
   },
 
   onItemInserted: () => {
-
     Toastify({
       text: "The employee has been successfully added",
       position: "center",
@@ -41,7 +39,7 @@ $("#jsGrid").jsGrid({
       close: true,
       style: {
         background: "linear-gradient(to right, #1CB5E0, #000046)",
-        color: "white"
+        color: "white",
       },
 
       offset: {
@@ -52,7 +50,6 @@ $("#jsGrid").jsGrid({
   },
 
   onItemUpdated: () => {
-
     Toastify({
       text: "The employee has been successfully modified",
       position: "center",
@@ -60,7 +57,7 @@ $("#jsGrid").jsGrid({
       close: true,
       style: {
         background: "linear-gradient(to right, #34e89e, #0f3443)",
-        color: "white"
+        color: "white",
       },
 
       offset: {
@@ -70,12 +67,11 @@ $("#jsGrid").jsGrid({
     }).showToast();
   },
 
-  
   controller: {
     loadData: function (response) {
       return $.ajax({
-        type: "GET",
-        url: "../src/library/employeeController.php",
+        type: "POST",
+        url: window.location.origin + window.location.pathname + "getEmployees",
         data: response,
         dataType: "json",
       });
@@ -84,23 +80,25 @@ $("#jsGrid").jsGrid({
     insertItem: function (item) {
       return $.ajax({
         type: "POST",
-        url: "./library/employeeController.php",
+        url: window.location.origin + window.location.pathname + "addEmployee",
         data: item,
       });
     },
 
     updateItem: function (item) {
       return $.ajax({
-        type: "PUT",
-        url: "./library/employeeController.php",
+        type: "POST",
+        url:
+          window.location.origin + window.location.pathname + "updateEmployee",
         data: item,
       });
     },
 
     deleteItem: function (item) {
       return $.ajax({
-        type: "DELETE",
-        url: "./library/employeeController.php/?id=" + item.id,
+        type: "POST",
+        url:
+          window.location.origin + window.location.pathname + "deleteEmployee",
         data: item,
       });
     },
@@ -172,6 +170,6 @@ $("#jsGrid").jsGrid({
       align: "center",
       validate: "required",
     },
-    { type: "control", editButton: true},
+    { type: "control", editButton: true },
   ],
 });
