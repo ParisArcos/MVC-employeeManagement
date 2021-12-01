@@ -1,21 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Router-Tryer</title>
-    <link rel="stylesheet" href="public/css/main.css">
-</head>
-<div id header>
-    <ul>
-        <li><a href="<?php echo constant('BASE_URL') . 'main' ?>">Home</a></li>
-        <li><a href="<?php echo constant('BASE_URL') . 'newUser' ?>">New</a></li>
-        <li><a href="<?php echo constant('BASE_URL') . 'dashboard' ?>">Dahsboard</a></li>
-        <li><a href="<?php echo constant('BASE_URL') . 'help' ?>">Help</a></li>
-        <li><a href="#">wtf?</a></li>
-    </ul>
-</div>
-
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light container w-100">
+        <a class="navbar-brand" href="#">Employees Management</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item ">
+                    <a class="nav-link" href="<?php echo constant('BASE_URL') . 'dashboard' ?>">Dashboard <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo constant('BASE_URL') . 'employee' ?>">New Employee</a>
+                </li>
+            </ul>
+
+            <a href="../src/library/loginController.php?logOut" class="ml-auto text-muted justify-self-end">
+                <button type="submit" class="btn" id="btnLogOut">
+                    Log out
+                </button>
+            </a>
+        </div>
+    </nav>
+
+    <div id header>
+    </div>

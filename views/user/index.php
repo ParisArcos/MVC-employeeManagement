@@ -1,7 +1,7 @@
    <div id="main">
        <h1>THIS IS NEW USER VIEW</h1>
 
-       <form action="<?php echo constant('BASE_URL'); ?>newUser/registerUser" method="POST">
+       <form action="<?php echo constant('BASE_URL'); ?>employee/registerUser" method="POST">
            <div>
                <label for="email">EMAIL</label>
                <input type="email" name="email" id="email">

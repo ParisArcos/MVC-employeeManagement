@@ -10,6 +10,6 @@ require_once "config/dbConstants.php";
 require_once "config/baseURL.php";
 
 
-require_once "views/header.php";
+require_once "views/head.php";
 $app = new App();
 require_once "views/footer.php";

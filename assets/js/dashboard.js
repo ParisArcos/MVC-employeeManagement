@@ -2,18 +2,20 @@ const btns = document.querySelectorAll(".deleteBtn");
 
 btns.forEach((btn) => {
   btn.addEventListener("click", function () {
-    const userName = this.dataset.username;
+    const id = this.dataset.id;
 
     const confirm = window.confirm("Sure bro?");
 
     if (confirm) {
       httpRequest(
-        "http://localhost/php-poo-practice/20-router-mvc/dashboard/deleteUser/" +
-          userName,
+        window.location.origin +
+          window.location.pathname +
+          "/deleteEmployee/" +
+          id,
         function () {
-          // SI QUIERES VER UN FALLO DE AJAX -> console.log(this.responseText);
+          //!TODO PARA VER ERRORES DE LA QUERY => console.log(this.responseText);
           const tbody = document.querySelector("#tbody-users");
-          const row = document.querySelector("#row-" + userName);
+          const row = document.querySelector("#row-" + id);
 
           tbody.removeChild(row);
         }

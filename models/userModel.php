@@ -1,6 +1,6 @@
 <?php
 
-class newUserModel extends Model
+class userModel extends Model
 {
     public function __construct()
     {
@@ -31,5 +31,19 @@ class newUserModel extends Model
             echo $e->getMessage();
             return false;
         }
+    }
+
+    function login($email, $password)
+    {
+        $query = $this->db->connect()->query("SELECT * FROM users WHERE email='$email'");
+        $query = $query->fetch();
+        if ($query) {
+            if (password_verify($password, $query['password'])) {
+                $_SESSION["lastLogin_timeStamp"] = time();
+                $_SESSION["userId"] = $query['id'];
+                return true;
+            }
+        }
+        return false;
     }
 }

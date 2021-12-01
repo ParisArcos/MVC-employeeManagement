@@ -30,7 +30,21 @@ class Database
             $pdo = new PDO($connection, $this->user, $this->password, $options);
             return $pdo;
         } catch (PDOException $e) {
+            if ($e->getCode() === 1049) {
+                $this->initializeDataBase();
+            } else {
+                print_r('Error connection: ' . $e->getMessage());
+            }
             print_r('Error connection: ' . $e->getMessage());
         }
+    }
+
+    private function initializeDataBase()
+    {
+        $PDO = new PDO('mysql:host' . $this->host, $this->user, $this->password);
+        $create = file_get_contents(getcwd() . '/DB/create_db.sql');
+        $PDO->exec($create);
+        $insert = file_get_contents(getcwd() . '/DB/insert_data.sql');
+        $PDO->exec($insert);
     }
 }

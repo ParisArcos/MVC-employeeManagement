@@ -14,36 +14,58 @@ class dashboardModel extends Model
     {
         $items = [];
         try {
-            $query = $this->db->connect()->query('SELECT * FROM users');
-
+            $query = $this->db->connect()->query(
+                'SELECT id,
+                        name,
+                        email,
+                        age,
+                        streetAddress,
+                        city,
+                        state,
+                        postalCode,
+                        phoneNumber
+                FROM employees'
+            );
             while ($row = $query->fetch()) {
-                $item = new User();
-                $item->user_name = $row['user_name'];
-                $item->user_password = $row['user_password'];
-                $item->email = $row['email'];
-
+                $item = [];
+                $item['id'] = $row['id'];
+                $item['name'] = $row['name'];
+                $item['email'] = $row['email'];
+                $item['age'] = $row['age'];
+                $item['streetAddress'] = $row['streetAddress'];
+                $item['city'] = $row['city'];
+                $item['state'] = $row['state'];
+                $item['postalCode'] = $row['postalCode'];
+                $item['phoneNumber'] = $row['phoneNumber'];
                 array_push($items, $item);
             }
-
             return $items;
         } catch (PDOException $e) {
+            echo $e->getMessage();
             return [];
         }
     }
     //? trae los datos del usuario pedido por dashboard/showUser
-    public function getById($userName)
+    public function getById($userId)
     {
         //?inicializamos un objeto User
-        $item = new User();
+        $item = [];
         //? Buscamos el usuario seleccionado
-        $query = $this->db->connect()->prepare("SELECT * FROM users WHERE user_name=:user_name");
+        $query = $this->db->connect()->prepare("SELECT * FROM employees WHERE id=:id");
         try {
-            $query->execute(['user_name' => $userName]);
+            $query->execute(['id' => $userId]);
             //? lo guardamos
             while ($row = $query->fetch()) {
-                $item->user_name = $row['user_name'];
-                $item->user_password = $row['user_password'];
-                $item->email = $row['email'];
+                $item['id'] = $row['id'];
+                $item['name'] = $row['name'];
+                $item['lastName'] = $row['lastName'];
+                $item['email'] = $row['email'];
+                $item['age'] = $row['age'];
+                $item['streetAddress'] = $row['streetAddress'];
+                $item['city'] = $row['city'];
+                $item['state'] = $row['state'];
+                $item['postalCode'] = $row['postalCode'];
+                $item['phoneNumber'] = $row['phoneNumber'];
             }
             //? lo devolvemos
             return $item;
@@ -52,33 +74,13 @@ class dashboardModel extends Model
         }
     }
 
-    //? Actualiza los datos del usuario pasado por dashboard/updateUser
-    public function update($item)
-    {
-        //? preparamos la query
-        //todo no esta hecho con el metodo "normal" de prepare-execute, user_name = : user_name 
-        //todo porque me daba Error: SQLSTATE[HY093]: Invalid parameter number
-        $query = $this->db->connect()->prepare(
-            "UPDATE users SET user_name='" . $item['user_name'] . "', user_password='" . $item['user_password'] . "', email='" . $item['email'] . "' WHERE user_name = '" . $item['user_name'] . "'"
-        );
-        try {
-            //? actualizamos
-            $query->execute();
-            return true;
-        } catch (PDOException $e) {
-            //? si falla mostramos mensaje de error de la BDD
-            echo $e->getMessage();
-            return false;
-        }
-    }
 
-
-    public function delete($userName)
+    public function delete($id)
     {
         //? Borramos el usuario seleccionado
-        $query = $this->db->connect()->prepare("DELETE FROM users WHERE user_name=:user_name");
+        $query = $this->db->connect()->prepare("DELETE FROM employees WHERE id=:id");
         try {
-            $query->execute(['user_name' => $userName]);
+            $query->execute(['id' => $id]);
 
             return true;
         } catch (PDOException $e) {
