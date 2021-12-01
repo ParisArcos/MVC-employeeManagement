@@ -34,11 +34,11 @@ class userModel extends Model
     }
 
     //? Método que interactura directamente con la bdd y recibe los datos del controlador
-    public function get()
+    public function get($name = "")
     {
         $items = [];
         try {
-            $query = $this->db->connect()->query('SELECT * FROM users');
+            $query = $this->db->connect()->query("SELECT * FROM users WHERE name !='admin' AND name !='$name'");
 
             while ($row = $query->fetch()) {
                 $item = new User();

@@ -44,6 +44,8 @@ class User extends Controller
         //?llamamos al modelo para que haga la consultar
         $user = $this->model->getById("$userName");
         //? le pasamos a la vista la informacion
+        $users =  $this->model->get($userName);
+        $this->view->users = $users;
         $this->view->user = $user;
         //? le decimos a la vista que pagina debe mostrar
         $this->view->render('user/editUser');

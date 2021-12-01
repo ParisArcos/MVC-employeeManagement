@@ -3,7 +3,6 @@ require_once "views/head.php";
 require_once "views/header.php";
 ?>
 <div id="dashboard">
-    <h1>THIS IS USER VIEW</h1>
     <table>
         <thead>
             <tr>
@@ -14,7 +13,14 @@ require_once "views/header.php";
             </tr>
         </thead>
         <tbody id="tbody-users">
-
+            <tr id="addUser">
+                <form action="<?php echo constant('BASE_URL'); ?>user/registerUser" method="POST">
+                    <td><input type="text" name="name" id="name"></td>
+                    <td><input type="email" name="email" id="email"></td>
+                    <td><input type="password" name="password" id="password"></td>
+                    <td> <input type="submit" value="<?php echo isset($user) ? 'update' : 'create' ?>" id="submit"></td>
+                </form>
+            </tr>
 
             <?php
             foreach ($this->users as $user) {
@@ -35,7 +41,7 @@ require_once "views/header.php";
             ?>
         </tbody>
     </table>
-    <a href="<?php echo constant('BASE_URL') . 'user/newUser' ?>"> <button class="btn btn-primary">Add User</button></a>
+
 </div>
 <script src="<?php echo constant('BASE_URL') ?>assets/js/users.js"></script>
 
