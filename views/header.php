@@ -7,10 +7,13 @@
         <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item ">
-                    <a class="nav-link" href="<?php echo constant('BASE_URL') . 'dashboard' ?>">Dashboard <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="<?php echo constant('BASE_URL') . 'dashboard/' ?>">Dashboard <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo constant('BASE_URL') . 'employee' ?>">New Employee</a>
+                    <a class="nav-link" href="<?php echo constant('BASE_URL') . 'dashboard/newEmployee' ?>">New Employee</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo constant('BASE_URL') . 'user' ?>">Users</a>
                 </li>
             </ul>
 

@@ -9,6 +9,40 @@ class dashboardModel extends Model
         parent::__construct();
     }
 
+    public function insert($data)
+    {
+
+        try {
+            //? db es una instancia de Database, creada en model.php 
+            //? llamamos a su método connect()
+            //? usamos prepare statement para evitar SQLinjection
+            $query = $this->db->connect()->prepare(
+                //? referenciamos la tabla, los campos y los valores
+                'INSERT INTO employees (name, email, city, state, postalCode, lastName, gender, streetAddress, age, phoneNumber)
+            VALUES(:name, :email, :city, :state, :postalCode, :lastName, :gender, :streetAddress, :age, :phoneNumber)'
+            );
+            //? enviamos los datos a la bdd
+            $query->execute([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'city' => $data['city'],
+                'state' => $data['state'],
+                'postalCode' => $data['postalCode'],
+                'lastName' => $data['lastName'],
+                'gender' => $data['gender'][0],
+                'streetAddress' => $data['streetAddress'],
+                'age' => $data['age'],
+                'phoneNumber' => $data['phoneNumber']
+
+
+            ]);
+            return true;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
     //? Método que interactura directamente con la bdd y recibe los datos del controlador
     public function get()
     {

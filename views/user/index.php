@@ -1,23 +1,44 @@
-   <div id="main">
-       <h1>THIS IS NEW USER VIEW</h1>
+<?php
+require_once "views/head.php";
+require_once "views/header.php";
+?>
+<div id="dashboard">
+    <h1>THIS IS USER VIEW</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="tbody-users">
 
-       <form action="<?php echo constant('BASE_URL'); ?>employee/registerUser" method="POST">
-           <div>
-               <label for="email">EMAIL</label>
-               <input type="email" name="email" id="email">
-           </div>
-           <div>
-               <label for="name">NAME</label>
-               <input type="text" name="name" id="name">
-           </div>
-           <div>
-               <label for="password">PASSWORD</label>
-               <input type="password" name="password" id="password">
-           </div>
-           <div>
 
-               <input type="submit" value="submit" id="submit">
-           </div>
-       </form>
+            <?php
+            foreach ($this->users as $user) {
+            ?>
+                <tr id="row-<?php echo $user->name; ?>">
+                    <td><?php echo $user->name; ?></td>
+                    <td><?php echo $user->email; ?></td>
+                    <td><?php echo $user->password; ?></td>
+                    <td><a href="<?php echo constant('BASE_URL') . 'user/showUser/' . $user->name ?>">Edit</a>
+                        <button class="deleteBtn" id="deleteBtn" data-userName="<?php echo $user->name; ?>">Delete</button>
 
-   </div>
+                    </td>
+                </tr>
+
+            <?php
+
+            }
+            ?>
+        </tbody>
+    </table>
+    <a href="<?php echo constant('BASE_URL') . 'user/newUser' ?>"> <button class="btn btn-primary">Add User</button></a>
+</div>
+<script src="<?php echo constant('BASE_URL') ?>assets/js/users.js"></script>
+
+<?php
+require_once "views/footer.php";
+?>

@@ -2,7 +2,7 @@ const btns = document.querySelectorAll(".deleteBtn");
 
 btns.forEach((btn) => {
   btn.addEventListener("click", function () {
-    const id = this.dataset.id;
+    const userName = this.dataset.username;
 
     const confirm = window.confirm("Sure bro?");
 
@@ -10,12 +10,12 @@ btns.forEach((btn) => {
       httpRequest(
         window.location.origin +
           window.location.pathname +
-          "/deleteEmployee/" +
-          id,
+          "/deleteUser/" +
+          userName,
         function () {
-          //! PARA VER ERRORES DE LA QUERY => console.log(this.responseText);
+          console.log(this.responseText);
           const tbody = document.querySelector("#tbody-users");
-          const row = document.querySelector("#row-" + id);
+          const row = document.querySelector("#row-" + userName);
 
           tbody.removeChild(row);
         }

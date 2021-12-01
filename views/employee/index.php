@@ -3,7 +3,7 @@ require_once "views/head.php";
 require_once "views/header.php";
 ?>
 <main class="container-xl mx-auto pb-90">
-    <form action="<?php echo constant('BASE_URL'); ?>employee/addEmployee" method="POST" class="container-md">
+    <form action="<?php echo constant('BASE_URL'); ?>dashboard/addEmployee" method="POST" class="container-md">
         <h3>Add new employee: </h3>
         <div class="row">
             <div class="col">

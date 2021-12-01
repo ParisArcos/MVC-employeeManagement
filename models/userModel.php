@@ -16,18 +16,97 @@ class userModel extends Model
             //? usamos prepare statement para evitar SQLinjection
             $query = $this->db->connect()->prepare(
                 //? referenciamos la tabla, los campos y los valores
-                'INSERT INTO users (user_name, user_password, email)
-            VALUES(:user_name, :user_password, :email)'
+                'INSERT INTO users (name, password, email)
+                VALUES(:name, :password, :email)'
             );
             //? enviamos los datos a la bdd
             $query->execute([
-                'user_name' => $data['user_name'],
-                'user_password' => $data['user_password'],
+                'name' => $data['name'],
+                'password' => $data['password'],
                 'email' => $data['email'],
 
             ]);
             return true;
         } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    //? Método que interactura directamente con la bdd y recibe los datos del controlador
+    public function get()
+    {
+        $items = [];
+        try {
+            $query = $this->db->connect()->query('SELECT * FROM users');
+
+            while ($row = $query->fetch()) {
+                $item = new User();
+                $item->name = $row['name'];
+                $item->password = $row['password'];
+                $item->email = $row['email'];
+
+                array_push($items, $item);
+            }
+
+            return $items;
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+    //? trae los datos del usuario pedido por dashboard/showUser
+    public function getById($userName)
+    {
+        //?inicializamos un objeto User
+        $item = new User();
+        //? Buscamos el usuario seleccionado
+        $query = $this->db->connect()->prepare("SELECT * FROM users WHERE name=:name");
+        try {
+            $query->execute(['name' => $userName]);
+            //? lo guardamos
+            while ($row = $query->fetch()) {
+                $item->name = $row['name'];
+                $item->password = $row['password'];
+                $item->email = $row['email'];
+            }
+            //? lo devolvemos
+            return $item;
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+    //? Actualiza los datos del usuario pasado por dashboard/updateUser
+    public function update($item)
+    {
+        //? preparamos la query
+        //todo no esta hecho con el metodo "normal" de prepare-execute, name = : name 
+        //todo porque me daba Error: SQLSTATE[HY093]: Invalid parameter number
+        $query = $this->db->connect()->prepare(
+            "UPDATE users SET name='$item[name]', password='$item[password]', email='$item[email]' WHERE name = '$item[name]'"
+        );
+        try {
+            //? actualizamos
+            $query->execute();
+            return true;
+        } catch (PDOException $e) {
+            //? si falla mostramos mensaje de error de la BDD
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+
+    public function delete($userName)
+    {
+        //? Borramos el usuario seleccionado
+        $query = $this->db->connect()->prepare("DELETE FROM users WHERE name=:name");
+        try {
+            $query->execute(['name' => $userName]);
+
+            return true;
+        } catch (PDOException $e) {
+            //? si falla mostramos mensaje de error de la BDD
             echo $e->getMessage();
             return false;
         }

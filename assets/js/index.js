@@ -2,7 +2,7 @@ $("#jsGrid").jsGrid({
   width: "80%",
 
   editing: true,
-  inserting: true,
+  inserting: false,
   sorting: true,
   paging: true,
   autoload: true,
@@ -65,6 +65,7 @@ $("#jsGrid").jsGrid({
         y: 10, // vertical axis - can be a number or a string indicating unity. eg: '2em'
       },
     }).showToast();
+    location.reload();
   },
 
   controller: {
