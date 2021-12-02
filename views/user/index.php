@@ -18,7 +18,7 @@ require_once "views/header.php";
                     <td><input type="text" name="name" id="name"></td>
                     <td><input type="email" name="email" id="email"></td>
                     <td><input type="password" name="password" id="password"></td>
-                    <td> <input type="submit" value="<?php echo isset($user) ? 'update' : 'create' ?>" id="submit"></td>
+                    <td> <input type="submit" value="create" id="submit"></td>
                 </form>
             </tr>
 

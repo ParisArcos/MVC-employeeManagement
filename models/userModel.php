@@ -54,6 +54,7 @@ class userModel extends Model
             return [];
         }
     }
+
     //? trae los datos del usuario pedido por dashboard/showUser
     public function getById($userName)
     {
@@ -96,7 +97,6 @@ class userModel extends Model
         }
     }
 
-
     public function delete($userName)
     {
         //? Borramos el usuario seleccionado
@@ -115,12 +115,13 @@ class userModel extends Model
     function login($email, $password)
     {
         $query = $this->db->connect()->query("SELECT * FROM users WHERE email='$email'");
-        $query = $query->fetch();
         if ($query) {
-            if (password_verify($password, $query['password'])) {
+            $user = $query->fetch();
+
+            if (password_verify($password, $user['password'])) {
                 $_SESSION["lastLogin_timeStamp"] = time();
-                $_SESSION["userId"] = $query['id'];
-                return true;
+                $_SESSION["userId"] = $user['id'];
+                return $user;
             }
         }
         return false;

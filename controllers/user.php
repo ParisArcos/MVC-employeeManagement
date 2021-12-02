@@ -21,7 +21,7 @@ class User extends Controller
         $data = [
             'email' => $_POST['email'],
             'name' => $_POST['name'],
-            'password' => $_POST['password'],
+            'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
         ];
         //? se mandan al modelo (newUserModel)
         if ($this->model->insert($data)) {
@@ -57,7 +57,7 @@ class User extends Controller
         //?recogemos los datos
         $data = [
             'email' => $_POST['email'],
-            'password' => $_POST['password'],
+            'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
             'name' => $_POST['name'],
         ];
 
