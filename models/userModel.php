@@ -119,8 +119,6 @@ class userModel extends Model
             $user = $query->fetch();
 
             if (password_verify($password, $user['password'])) {
-                $_SESSION["lastLogin_timeStamp"] = time();
-                $_SESSION["userId"] = $user['id'];
                 return $user;
             }
         }

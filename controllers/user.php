@@ -2,12 +2,21 @@
 
 class User extends Controller
 {
+    //!PARAMS
+
+    public $id;
+    public $name;
+    public $password;
+    public $email;
+
+    //!CONSTRUCTOR
 
     public function __construct()
     {
         parent::__construct();
     }
 
+    //!CLASS METHODS
 
     public function render()
     {
@@ -99,11 +108,23 @@ class User extends Controller
         $email = $_POST['email'];
         $password = $_POST['password'];
         //? se mandan al modelo (userModel)
-        if ($this->model->login($email, $password)) {
+        $user = $this->model->login($email, $password);
+        if ($user) {
+            $_SESSION["lastLogin_timeStamp"] = time();
+            $_SESSION["user"] = $user;
             header("Location:" . BASE_URL . "dashboard/");
         } else {
+            $_SESSION["loginError"] = "Invalid user or password";
             header("Location:" . BASE_URL);
-            exit();
+        }
+    }
+
+    public function logOut()
+    {
+        if (isset($_SESSION['user'])) {
+            unset($_SESSION['login_time_stamp']);
+            unset($_SESSION['user']);
+            header("Location:" . BASE_URL);
         }
     }
 }

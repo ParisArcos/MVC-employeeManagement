@@ -1,19 +1,9 @@
-<!-- expiring session feature -->
+<!-- TODO Application entry point. Login view -->
 <?php
-// require("../src/library/sessionHelper.php");
-
-// Session starts
-session_start();
-
-if (isset($_SESSION)) {
-    // Login time is stored in a session variable
-    $_SESSION["login_time_stamp"] = time();
+if (isset($_SESSION['user'])) {
+    header("Location:" . BASE_URL . "dashboard/");
 }
 ?>
-
-
-
-<!-- TODO Application entry point. Login view -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,6 +33,11 @@ if (isset($_SESSION)) {
             <img src="./assets/img/icon employees.png" width="100" height="100" class="me-3" alt="Dani&Marc">
             <h1 class="h3 mb-3 fw-normal text-left">Sign in to your account</h1>
 
+            <?php if (isset($_SESSION['loginError'])) {
+                echo "<div class='alert alert-danger'>$_SESSION[loginError]</div>";
+                unset($_SESSION['loginError']);
+            }
+            ?>
             <div class="form-floating">
 
                 <input required type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" placeholder="name@example.org" data-bs-toggle="tooltip" data-bs-html="true">
@@ -53,17 +48,7 @@ if (isset($_SESSION)) {
                 <input required type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Contrasenya">
                 <label for="exampleInputPassword1">Password</label>
             </div>
-            <?php
-            if (isset($_GET['invalidData'])) {
-                echo "<div class='alert alert-danger'> <h5>Invalid password or email, please try again. </h5></div>";
-                unset($_GET['invalidData']);
-            }
 
-            if (isset($_GET['logOut'])) {
-                echo "<div class='alert alert-success'> <h5>You have been successfully logged out.</h5></div>";
-                header('Refresh:2, ./index.php');
-            }
-            ?>
             <button type="submit" class="w-100 btn login-btn">Sign in</button>
 
         </form>
